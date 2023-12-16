@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title> سرية كشافة ومرشدات مار يوسف العامل - الرينة </title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #fff0f5;
+            /* Light pink background */
+            text-align: center;
+        }
+
+        h2,
+        h1 {
+            color: #008000;
+            /* Christmas green */
+        }
+
+        #drawnNumber {
+            font-size: 100px;
+            margin: 20px;
+            color: #ff0000;
+            /* Red color for the drawn number */
+        }
+
+        #drawnNumbersTable {
+            margin: auto;
+            border-collapse: collapse;
+            max-width: 480px;
+            width: 100%;
+        }
+
+        #drawnNumbersTable td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            width: 50px;
+            text-align: center;
+            background-color: #f0fff0;
+            color: #006400;
+            font-size: 50px;
+            /* Light green for table cells */
+        }
+
+        button {
+            background-color: #008000;
+            /* Christmas green */
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #006400;
+            /* Darker green on hover */
+        }
+
+        .settings {
+            margin-bottom: 20px;
+        }
+
+        input[type="number"] {
+            padding: 5px;
+        }
+
+        .main-div {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-around;
+        }
+
+        .results {
+            width: 500px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main-div">
+        <div>
+            <h1>سرية كشافة ومرشدات مار يوسف العامل - الرينة </h1>
+            <h2>Christmas Bingo - 2023</h2>
+            <image src="./logoXmas.png" width="250px" />
+        </div>
+        <div>
+            <div class="settings">
+                <label for="range">Set Number Range (1 to: )</label>
+                <input type="number" id="range" value="75" min="1" max="100">
+                <button onclick="updateRange()">حدد الارقام</button>
+            </div>
+
+            <button onclick="drawNumber()">الرقم التالي</button>
+            <button onclick="newGame()">لعبة جديدة</button>
+
+            <div class="results">
+                <div id="drawnNumber"></div>
+                <table id="drawnNumbersTable"></table>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        var drawnNumbers = [];
+        var maxNumber = 75;
+
+        function drawNumber() {
+            if ( drawnNumbers.length >= maxNumber ) {
+                alert( "All numbers drawn. Start a new game." );
+                return;
+            }
+
+            let randomNumber;
+            do {
+                randomNumber = Math.floor( Math.random() * maxNumber ) + 1;
+            } while ( drawnNumbers.includes( randomNumber ) );
+
+            drawnNumbers.push( randomNumber );
+            document.getElementById( 'drawnNumber' ).innerText = 'الرقم: ' + randomNumber;
+            updateDrawnNumbersTable();
+        }
+
+        function newGame() {
+            drawnNumbers = [];
+            document.getElementById( 'drawnNumber' ).innerText = '';
+            updateDrawnNumbersTable();
+        }
+
+        function updateRange() {
+            var rangeInput = document.getElementById( 'range' );
+            maxNumber = parseInt( rangeInput.value );
+            newGame();
+        }
+
+        function updateDrawnNumbersTable() {
+            var table = document.getElementById( 'drawnNumbersTable' );
+            table.innerHTML = '';
+            var row = table.insertRow();
+
+            drawnNumbers.forEach( ( number, index ) => {
+                if ( index % 5 === 0 && index !== 0 ) {
+                    row = table.insertRow();
+                }
+                var cell = row.insertCell();
+                cell.innerText = number;
+            } );
+        }
+    </script>
+</body>
+
+</html>
